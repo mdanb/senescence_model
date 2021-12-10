@@ -27,7 +27,7 @@ load comparison_data.mat;
 % Figure 3 - This illustrates the trajectory of th solution and fit to data
 figure();clf;hold all;
 % import
-input_file = './result_files/our_model/parameters_final3_ga.mat';
+input_file = './result_files/our_model_exponential/best.mat';
 load(input_file)
 % Plot the model trajectories and the dataset
 vis_traj(result,state_num,fit,data);

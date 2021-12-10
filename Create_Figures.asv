@@ -27,7 +27,7 @@ load comparison_data.mat;
 % Figure 3 - This illustrates the trajectory of th solution and fit to data
 figure();clf;hold all;
 % import
-input_file = 'parameters_final5_ga.mat';
+input_file = './result_files/our_run_of_authors/best.mat';
 load(input_file)
 % Plot the model trajectories and the dataset
 vis_traj(result,state_num,fit,data);
@@ -174,10 +174,10 @@ pause;clc;
 % vis_sene_traj(result,state_num,fit,data);
 % disp('press enter');
 % pause;clc;clear err;
-%% Figure 5 - Sensitivity Analysis
-% vis_sens2D;
-% disp('press enter');
-% pause;clc;
+% Figure 5 - Sensitivity Analysis
+vis_sens2D;
+disp('press enter');
+pause;clc;
 %% Supplemental Figure 1 - Vis Traj with G -> S transition equal 0
 % figure();clf;hold all;
 % % import

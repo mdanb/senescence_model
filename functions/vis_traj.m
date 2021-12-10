@@ -65,15 +65,17 @@ function vis_traj(result,state_num,fit,data)
 
     % Plot the trajectories of the populations
     subplot(3,2,6);hold on;
-    plot(times,prol,'color',C(1,:),'LineWidth',3);
-    plot(times,sene,'color',C(2,:),'LineStyle','--','LineWidth',3);
-    plot(times,grar,'color',C(3,:),'LineStyle','-.','LineWidth',3);
-    plot(times,apop,'color',C(4,:),'LineStyle',':','LineWidth',3);
+    plot(times,prol,'color','green','LineWidth',3);
+    plot(times,sene,'color','red', 'LineStyle','--','LineWidth',3);
+    plot(times,grar,'color','magenta', 'LineStyle','-.','LineWidth',3);
+    plot(times,apop,'color','blue','LineStyle',':','LineWidth',3);
     legend({'proliferative','senescent','growth-arrested','apoptotic'}, ...
         Location='east');
-    xlabel('Time (hours)');
-    ylabel('Population Fractions'); 
+    xlabel('time (h)');
+    ylabel('fraction of total populations'); 
+%     title('Model populations')
     axis([0,end_time,0,1]);
+    title('f')
     
     
 
@@ -81,8 +83,8 @@ function vis_traj(result,state_num,fit,data)
     subplot(3,2,1);hold on;
     plot(times,PD,'color',C(3,:),'LineWidth',3);
     scatter(fit.cum_hours,fit.cum_PD,'filled','ko','LineWidth',3);
-    ylabel('Population Doublings');
-    xlabel('Time (hours)');
+    ylabel('no. doublings');
+%     xlabel('Time (hours)');
     if ~isequal(data,fit)
         scatter(omitted.cum_hours,omitted.cum_PD,'ko','LineWidth',3);    
         legend('Model Total Doublings','Data Total Doublings Fit',...
@@ -91,23 +93,28 @@ function vis_traj(result,state_num,fit,data)
         legend('Model Total Doublings','Data Total Doublings Fit');
     end
     axis([0,end_time,0,40]);
-    
+%     title('Total population doublings')
+    title('a')
     
     
     % Beta Gal and Senescence
     subplot(3,2,2);hold on;
     plot(times,100*sene,'color',C(3,:),'LineWidth',3);
     scatter(fit.cum_hours,100*fit.pass_b_gal,'filled','ko','LineWidth',3);
-    ylabel('% Senescence and Beta Gal');
-    xlabel('Time (hours)');
+    ylabel('% cells expressing SA-\beta-Gal');
+%     xlabel('time (h)');
     
     if ~isequal(data,fit)
         scatter(omitted.cum_hours,100*omitted.pass_b_gal,'ko','LineWidth',3);    
         legend('Model Senescent','Data Beta Gal Fit','Data Beta Gal omitted');
     else
-        legend('Model Senescent','Data Beta Gal Fit');
+        legend({'Model Senescent','Data Beta Gal Fit'}, ...
+        Location='east');
     end
     axis([0,end_time,0,100]);
+    title('b')
+%     title('Data: SA-\beta-Gal, Curve: Senescent (S) population')
+
     
     
     
@@ -115,8 +122,8 @@ function vis_traj(result,state_num,fit,data)
     subplot(3,2,3);hold on;
     plot(times,100*(prol+ G_in_Ki67*grar),'color',C(3,:),'LineWidth',3);
     scatter(fit.cum_hours,100*fit.pass_ki_67,'filled','ko','LineWidth',3);
-    ylabel('% Prolif/Quies and Ki67');
-    xlabel('Time (hours)');   
+    ylabel('% cells expressing Ki-67', 'interpreter','latex');
+%     xlabel('Time (hours)');   
     if ~isequal(data,fit)
         scatter(omitted.cum_hours,100*omitted.pass_ki_67,'ko','LineWidth',3);    
         legend('Model Prolif/Quies','Data Ki67 Fit','Data Ki67 omitted'); 
@@ -124,15 +131,15 @@ function vis_traj(result,state_num,fit,data)
         legend('Model Prolif/Quies','Data Ki67 Fit'); 
     end
     axis([0,end_time,0,100]);
-    
+    title('c')
     
     
     % H2Ax and sen + dead cells + some % prolif
     subplot(3,2,4);hold on;
     plot(times,100*(sene + apop + P_in_H2AX*prol + G_in_H2AX*grar), 'color',C(3,:),'LineWidth',3);
     scatter(fit.cum_hours,100*fit.pass_H2Ax,'filled','ko','LineWidth',3);
-    ylabel('% Sen/Apop and H2Ax');
-    xlabel('Time (hours)');
+    ylabel('% cells expressing \gammaH2AX');
+%     xlabel('Time (hours)');
     
     if ~isequal(data,fit)    
         scatter(omitted.cum_hours,100*omitted.pass_H2Ax,'ko','LineWidth',3);    
@@ -141,15 +148,15 @@ function vis_traj(result,state_num,fit,data)
         legend('Model Sen/Apop','Data H2Ax Fit');
     end
     axis([0,end_time,0,100]);
-    
+    title('d')
     
     
     %tunel and apoptotic cells
     subplot(3,2,5);hold on;
     plot(times,100*apop,'color',C(3,:),'LineWidth',3);
     scatter(fit.cum_hours,100*fit.pass_tunel,'filled','ko','LineWidth',3);
-    ylabel('% Apop and TUNEL');
-    xlabel('Time (hours)');
+    ylabel('% cells expressing TUNEL');
+    xlabel('time (h)');
     
     if ~isequal(data,fit)      
         scatter(omitted.cum_hours,100*omitted.pass_tunel,'ko','LineWidth',3);    
@@ -158,7 +165,7 @@ function vis_traj(result,state_num,fit,data)
         legend('Model Apop','Data Tunel Fit');
     end
     axis([0,end_time,0,100]);
-    
+    title('e')
     
     
     %%%% PRINT RESULT, SHOW THE ERROR

@@ -55,7 +55,7 @@ fit = data_subset(data, fw_pts);
 
 % Run Optimizations
 % Full Dataset
-tot_its = 5;
+tot_its = 3;
 seeds = randi(1e9,[tot_its,1]);
 for i = 1:tot_its
     disp(num2str(i));
